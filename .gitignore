@@ -1,0 +1,9 @@
+.vs
+x64
+libeay32.dll
+libmysql.dll
+ssleay32.dll
+testik.sln
+testik.vcxproj
+testik.vcxproj.filters
+testik.vcxproj.user
