@@ -1,4 +1,5 @@
 .vs
+.gitattributes
 x64
 libeay32.dll
 libmysql.dll

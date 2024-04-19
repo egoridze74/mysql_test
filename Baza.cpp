@@ -6,8 +6,7 @@ void print_table(MYSQL* conn) {
 	MYSQL_RES* res;
 	MYSQL_ROW row = NULL;
 	std::string query = "SELECT * FROM test";
-	const char* q = query.c_str();
-	int qstate = mysql_query(conn, q);
+	int qstate = mysql_query(conn, query.c_str());
 	if (!qstate)
 	{
 		res = mysql_store_result(conn);
@@ -19,26 +18,6 @@ void print_table(MYSQL* conn) {
 }
 
 
-class Teacher
-{
-private:
-	std::string name;
-	long long number = 89772585877;
-	std::string email;
-public:
-	Teacher() {
-		name = "-";
-		number = 0;
-		email = "-";
-	};
-
-	Teacher(std::string new_name, long long new_number, std::string new_email) {
-		name = new_name;
-		number = new_number;
-		email = new_email;
-	}
-};
-
 int main() 
 {
 	MYSQL* conn;
@@ -46,19 +25,39 @@ int main()
 	if (conn == NULL)
 	{
 		// Если дескриптор не получен – выводим сообщение об ошибке
-		fprintf(stderr, "Error: can'tcreate MySQL-descriptor\n");
+		fprintf(stderr, "Error: can't create MySQL-descriptor\n");
 	}
 
 	conn = mysql_real_connect(conn, "localhost", "root", "Rjhyttyrj2005", "test", 3306, NULL, 0);
 
 	if (conn) 
 	{
-		std::cout << "Successful connetion to database!" << std::endl;
+		std::cout << "Successful connetion to database!" << std::endl << std::endl;
+		std::cout << "Table before:" << std::endl;
+		print_table(conn);
+
+		/*std::string name, email;
+		long long number;
+		int id;
+		std::cin >> id >> name >> number >> email;*/
+		std::string query = "INSERT INTO test (id, name, number, email) VALUES (2, \"Nester\", 777, \"legenda@mail.ru\")";
+		int qstate = mysql_query(conn, query.c_str());
+		if (qstate)
+		{
+			std::cout << mysql_error(conn) << std::endl;
+		}
+		else
+		{
+			std::cout << "Data inserted." << std::endl << std::endl;
+		}
+
+		std::cout << "Table after:" << std::endl;
 		print_table(conn);
 	}
 	else
 	{
 		std::cout << "Connection to databse failed." << std::endl;
 	}
+	mysql_close(conn);
 	return 0;
 }
